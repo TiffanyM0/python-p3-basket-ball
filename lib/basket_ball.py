@@ -195,21 +195,55 @@ def player_age(name):
         if player['name'] == name :
             return player['age']
 
-
 def team_colors(name):
-    colors = game_dict()['home'] 
-    if colors['team_name'] == name:
-        return colors['colors']
+    home = game_dict()['home'] 
+    away = game_dict()['away']
+    if home['team_name'] == name:
+        return home['colors']
+    elif away['team_name'] == name:
+        return away['colors']
 
 def team_names():
     pass
+    teams = [game_dict()['home']['team_name'], game_dict()['away']['team_name']]
+    return teams 
 
-def player_numbers():
+def player_numbers(name):
     pass
+    players = game_dict()['home']['players'] + game_dict()['away']['players']
+    teams = team_names()
+    numbers = []
+    if name == teams[0]:
+        players = game_dict()['home']['players']
+        for player in players:
+            numbers.append(player['number'])
+        return numbers
+    elif name == teams[1]:
+        players = game_dict()['away']['players']
+        for player in players:
+            numbers.append(player['number'])
+        return numbers
 
-def player_stats():
+def player_stats(name):
     pass
+    players = game_dict()['home']['players'] + game_dict()['away']['players']
+    for player in players:
+        if player['name'] == name:
+            return player
 
 def average_rebounds_by_shoe_brand():
     pass
-
+    #calculate average rebounds per shoe brand
+    # 'Brand' : average_rebounds as float with 2 dec points
+    # create dict() key = shoe brand : value = [rebound1, rebound2]
+    # => {"Nike" : [5.0, 8.1, 4,7]}
+    # in main_dict() check players shoe and rebound
+    # if player_shoe is in new_dict 
+        #=> append rebound to new_dict['shoe']
+    #in new_dict => x[0] in rebound + x[1] ... /len(rebound) as float
+    # print
+    players = game_dict()['home']['players'] + game_dict()['away']['players']
+    rebound_per_shoe = {}
+    for player in players:
+        rebound_per_shoe[player['shoe_brand']]= player['rebounds_per_game']
+    nike_rebound = rebound_per_shoe.fromkeys('Nike')
