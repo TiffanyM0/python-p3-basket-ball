@@ -232,18 +232,28 @@ def player_stats(name):
             return player
 
 def average_rebounds_by_shoe_brand():
-    pass
     #calculate average rebounds per shoe brand
-    # 'Brand' : average_rebounds as float with 2 dec points
-    # create dict() key = shoe brand : value = [rebound1, rebound2]
-    # => {"Nike" : [5.0, 8.1, 4,7]}
-    # in main_dict() check players shoe and rebound
-    # if player_shoe is in new_dict 
-        #=> append rebound to new_dict['shoe']
-    #in new_dict => x[0] in rebound + x[1] ... /len(rebound) as float
-    # print
+        # 'Brand' : average_rebounds as float with 2 dec points
+        # create dict() key = shoe brand : value = [rebound1, rebound2]
+        # => {"Nike" : [5.0, 8.1, 4,7]}
+        # in main_dict() check players shoe and rebound
+        # if player_shoe is in new_dict 
+            #=> append rebound to new_dict['shoe']
+        #in new_dict => x[0] in rebound + x[1] ... /len(rebound) as float
+        # print
     players = game_dict()['home']['players'] + game_dict()['away']['players']
     rebound_per_shoe = {}
     for player in players:
-        rebound_per_shoe[player['shoe_brand']]= player['rebounds_per_game']
-    nike_rebound = rebound_per_shoe.fromkeys('Nike')
+        x = player['rebounds_per_game']
+        y = player['shoe_brand']
+        if y in rebound_per_shoe:
+            rebound_per_shoe[y].append(x)
+        else: 
+            rebound_per_shoe.update({y : [x]})
+            # "rebounds_per_game": 3.8
+            # "shoe_brand": "Jordan"
+    for shoe in rebound_per_shoe:
+        pass
+        num = len(rebound_per_shoe[shoe])
+        average_reb = format(sum(rebound_per_shoe[shoe])/num, ".2f")
+        print(f"{shoe}:  {average_reb}")
